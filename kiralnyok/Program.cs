@@ -75,6 +75,7 @@ namespace kiralynok
                 }
             }
         }
+
         public bool Uresoszlopok(int oszlop)
         {
             int i = 0;
