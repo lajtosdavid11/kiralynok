@@ -12,7 +12,7 @@ namespace kiralynok
         private char UresOszlopSzam;
         private char UresSorokSzama;
         private char[,] t;
-        private int kiralynok;
+       
         
         public void elhelyezes(int N)
         {
@@ -21,21 +21,21 @@ namespace kiralynok
             // - Véletlen sor és oszlop
             // - Elhelyezzük a k-t;
             // - HA ÜRES -> "#"
-            Console.Write("Hány királynő legyen : ");
-            kiralynok = int.Parse(Console.ReadLine());
+            
 
             Random rnd = new Random();
 
-            for (int i = 0; i < kiralynok; i++)
+            for (int i = 0; i < N; i++)
             {
-                while (true)
+                bool igaz = true;
+                while (igaz)
                 {
                     int sor = rnd.Next(0, 8);
                     int oszlop = rnd.Next(0, 8);
                     if (t[sor, oszlop] == '#')
                     {
                         t[sor, oszlop] = 'K';
-                        break;
+                        igaz = false;
                     }
 
                 }
@@ -45,21 +45,20 @@ namespace kiralynok
 
 
 
-
         }
         public void megjelenit()
         {
+            Console.WriteLine();
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
-                    Console.Write(t[i, j] + " ");
-                }
-                Console.WriteLine();
+                    Console.Write("{0} ", t[i, j]);
 
+                }
+                Console.Write("\n");
             }
             Console.WriteLine();
-
 
         }
 
@@ -76,14 +75,37 @@ namespace kiralynok
                 }
             }
         }
-        public int Uresoszlopok()
+        public bool Uresoszlopok(int oszlop)
         {
-            return 0;
+            int i = 0;
+            bool van = true;
+            while (van && i<8)
+            {
+                if (t[i,oszlop] =='K')
+                {
+                    van = false;
+                }
+                i++;
+            }
+            return true;
         }
-        public int uressor()
+        public bool uressor(int sor)
         {
-            return 0;
+            int i = 0;
+            bool van = true;
+            while (van && i < 8)
+            {
+                if (t[sor, i] == 'K')
+                {
+                    van = false;
+                }
+                i++;
+            }
+            return true;
+
         }
+           
+        
 
         public void fajlbair()
         {
@@ -98,12 +120,14 @@ namespace kiralynok
         static void Main(string[] args)
         {
             Tabla t = new Tabla('#');
-            
-            Console.WriteLine("Üres tábla");
+            Console.WriteLine("Üres tábla:");
             t.megjelenit();
             t.elhelyezes(1);
-            Console.WriteLine();
+            Console.WriteLine("\n");
             t.megjelenit();
+            Console.WriteLine("Van-e az oszlopban király?" , t.Uresoszlopok(1));
+
+            Console.WriteLine("Van a sorban király?" , t.uressor(1));
 
 
 
